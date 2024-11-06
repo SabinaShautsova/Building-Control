@@ -1,0 +1,24 @@
+.building-details {
+    padding: 20px;
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    max-width: 600px;
+    margin: 20px auto;
+  }
+  
+  .building-details h1 {
+    font-size: 1.8rem;
+    color: #333;
+  }
+  
+  .building-details p {
+    font-size: 1rem;
+    color: #555;
+    margin: 10px 0;
+  }
+  
+  .temperature-control {
+    margin-top: 15px;
+  }
+  
