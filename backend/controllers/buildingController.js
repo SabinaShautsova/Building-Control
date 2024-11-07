@@ -1,6 +1,5 @@
-const Building = require('../models/Building');
+const Building = require('../../models/Building');
 
-// GET all buildings
 exports.getBuildings = async (req, res) => {
   try {
     const buildings = await Building.find();
@@ -10,7 +9,7 @@ exports.getBuildings = async (req, res) => {
   }
 };
 
-// GET building by ID
+
 exports.getBuildingById = async (req, res) => {
   try {
     const building = await Building.findById(req.params.id);
@@ -21,7 +20,7 @@ exports.getBuildingById = async (req, res) => {
   }
 };
 
-// POST create new building
+
 exports.createBuilding = async (req, res) => {
   try {
     const newBuilding = new Building(req.body);
@@ -32,7 +31,6 @@ exports.createBuilding = async (req, res) => {
   }
 };
 
-// PUT update building
 exports.updateBuilding = async (req, res) => {
   try {
     const updatedBuilding = await Building.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -43,7 +41,6 @@ exports.updateBuilding = async (req, res) => {
   }
 };
 
-// DELETE building
 exports.deleteBuilding = async (req, res) => {
   try {
     await Building.findByIdAndDelete(req.params.id);
@@ -53,7 +50,6 @@ exports.deleteBuilding = async (req, res) => {
   }
 };
 
-// PATCH update temperature
 exports.updateTemperature = async (req, res) => {
   try {
     const building = await Building.findById(req.params.id);

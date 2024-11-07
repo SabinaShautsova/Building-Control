@@ -3,22 +3,19 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
 
-// Load environment variables
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5001;
 
-// Middleware
 app.use(cors({ origin: 'http://localhost:3000' }));
-app.use(express.json()); // Middleware to parse JSON request bodies
+app.use(express.json()); 
 
-// MongoDB connection
 mongoose.connect(process.env.MONGODB_URI)
     .then(() => console.log("Connected to MongoDB"))
     .catch(error => console.error("MongoDB connection error:", error));
 
-// Define a Mongoose schema and model for a building
+
 const buildingSchema = new mongoose.Schema({
     name: { type: String, required: true },
     location: { type: String, required: true },
@@ -29,8 +26,6 @@ const buildingSchema = new mongoose.Schema({
 const Building = mongoose.model('Building', buildingSchema);
 
 // Routes
-
-// GET: Retrieve all buildings
 app.get('/buildings', async (req, res) => {
     try {
         const buildings = await Building.find();
@@ -40,7 +35,6 @@ app.get('/buildings', async (req, res) => {
     }
 });
 
-// GET: Retrieve a single building by ID
 app.get('/buildings/:id', async (req, res) => {
     try {
         const building = await Building.findById(req.params.id);
@@ -53,7 +47,6 @@ app.get('/buildings/:id', async (req, res) => {
     }
 });
 
-// POST: Create a new building
 app.post('/buildings', async (req, res) => {
     try {
         const newBuilding = new Building(req.body);
@@ -64,7 +57,6 @@ app.post('/buildings', async (req, res) => {
     }
 });
 
-// PUT: Update an existing building by ID
 app.put('/buildings/:id', async (req, res) => {
     try {
         const updatedBuilding = await Building.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -77,7 +69,6 @@ app.put('/buildings/:id', async (req, res) => {
     }
 });
 
-// DELETE: Remove a building by ID
 app.delete('/buildings/:id', async (req, res) => {
     try {
         const deletedBuilding = await Building.findByIdAndDelete(req.params.id);
@@ -90,7 +81,6 @@ app.delete('/buildings/:id', async (req, res) => {
     }
 });
 
-// PATCH: Update only the temperature of a building by ID
 app.patch('/buildings/:id/temperature', async (req, res) => {
     try {
         const building = await Building.findById(req.params.id);
@@ -105,10 +95,8 @@ app.patch('/buildings/:id/temperature', async (req, res) => {
     }
 });
 
-// Root route for health check
 app.get('/', (req, res) => {
     res.send("Hello, the server is running and connected to MongoDB!");
 });
 
-// Start the server
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
