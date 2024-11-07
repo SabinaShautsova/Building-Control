@@ -9,7 +9,7 @@ import AddIcon from '@mui/icons-material/Add'
 function BuildingList() {
   const [buildings, setBuildings] = useState([]);
   const [error, setError] = useState(null);
-  const [sortOrder, setSortOrder] = useState('asc'); // 'asc' for ascending, 'desc' for descending
+  const [sortOrder, setSortOrder] = useState('asc'); 
 
   useEffect(() => {
     const getBuildings = async () => {
@@ -23,12 +23,10 @@ function BuildingList() {
     getBuildings();
   }, []);
 
-  // Function to toggle sorting order
   const toggleSortOrder = () => {
     setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
   };
 
-  // Sorting buildings by name 
   const sortedBuildings = [...buildings].sort((a, b) => {
     if (sortOrder === 'asc') {
       return a.name.localeCompare(b.name);
@@ -41,9 +39,9 @@ function BuildingList() {
 
   return (
     <div>
-      <Typography variant="h4" gutterBottom>Buildings</Typography>
+      <Typography variant="h4" gutterBottom sx={{padding: '11px'}}>Buildings</Typography>
 
-      <IconButton onClick={toggleSortOrder} aria-label="sort">
+      <IconButton sx={{padding: '11px'}} onClick={toggleSortOrder} aria-label="sort">
         <SortIcon />
         <Typography variant="body2" style={{ marginLeft: '5px' }}>
           Sort by Name ({sortOrder === 'asc' ? 'A-Z' : 'Z-A'})
@@ -51,9 +49,9 @@ function BuildingList() {
       </IconButton>
 
       {sortedBuildings.map((building) => (
-        <Card key={building._id} variant="outlined" style={{ marginBottom: '10px' }}>
+        <Card key={building._id} variant="outlined" style={{ marginBottom: '10px', marginLeft: '10px' }} sx={{ width: '700px' }}>
           <CardContent>
-            <Box display="flex" justifyContent="space-between" alignItems="center">
+            <Box display="flex" justifyContent="space-between" alignItems="center" sx={{ width: '650px' }} >
               <div>
                 <Typography variant="h6">
                   <HomeIcon style={{ marginRight: '5px' }} />
@@ -67,8 +65,7 @@ function BuildingList() {
                 to={`/buildings/${building._id}`}
                 variant="contained"
                 color="primary"
-                style={{ marginLeft: 'auto' }}
-              >
+                style={{ marginLeft: 'auto' }} >
                 View Details
               </Button>
             </Box>
@@ -76,16 +73,17 @@ function BuildingList() {
         </Card>
       ))}
 
+      <Box sx={{padding: '11px'}}>
       <Button
         component={Link}
         to="/add-building"
         variant="outlined"
         color="primary"
         startIcon={<AddIcon />}
-        style={{ marginTop: '15px' }}
-      >
+        style={{ marginTop: '5px' }} >
         Add New Building
       </Button>
+      </Box>
     </div>
   );
 }

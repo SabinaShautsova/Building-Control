@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { createBuilding, updateBuilding, fetchBuildingById } from '../api';
-import { Button, Slider, Typography } from '@mui/material';
+import { Button, Slider, Typography, Box } from '@mui/material';
 
 function BuildingForm() {
   const { id } = useParams();
@@ -47,12 +47,13 @@ function BuildingForm() {
   };
 
   return (
+    <Box sx={{ paddingLeft: '20px'}}>
     <div>
       <Typography variant="h4">{id ? 'Edit Building' : 'Add Building'}</Typography>
       
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Building Name:</label>
+          <label>Building Name: </label>
           <input
             type="text"
             value={name}
@@ -62,7 +63,7 @@ function BuildingForm() {
         </div>
         
         <div>
-          <label>Location:</label>
+          <label>Location: </label>
           <input
             type="text"
             value={location}
@@ -97,6 +98,7 @@ function BuildingForm() {
         </Button>
       </form>
     </div>
+    </Box>
   );
 }
 

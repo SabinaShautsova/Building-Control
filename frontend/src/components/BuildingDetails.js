@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { fetchBuildingById, deleteBuilding } from '../api';
-import { Button, Typography } from '@mui/material';
+import { Button, Typography, Box } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -42,6 +42,7 @@ function BuildingDetails() {
   if (!building) return null;
 
   return (
+    <Box sx={{ paddingLeft: '20px'}}>
     <div>
       <Typography variant="h4">{building.name}</Typography>
       <Typography variant="body1">Location: {building.location}</Typography>
@@ -53,8 +54,7 @@ function BuildingDetails() {
         startIcon={<EditIcon />}
         component={Link}
         to={`/edit-building/${building._id}`}
-        style={{ marginTop: '10px', marginRight: '10px' }}
-      >
+        style={{ marginTop: '10px', marginRight: '10px' }} >
         Edit
       </Button>
       
@@ -63,8 +63,7 @@ function BuildingDetails() {
         color="primary"
         startIcon={<ArrowBackIcon />}
         onClick={() => navigate('/')}
-        style={{ marginTop: '10px' }}
-      >
+        style={{ marginTop: '10px' }} >
         Back to List
       </Button>
       
@@ -74,11 +73,11 @@ function BuildingDetails() {
         sx={{ minWidth: '250px' }}
         startIcon={<DeleteIcon />}
         onClick={handleDelete}
-        style={{ display: 'block', marginTop: '20px' }}
-      >
+        style={{ display: 'block', marginTop: '20px' }}>
         Delete
       </Button>
     </div>
+    </Box>
   );
 }
 
