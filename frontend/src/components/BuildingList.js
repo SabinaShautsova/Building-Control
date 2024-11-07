@@ -1,12 +1,15 @@
-// src/components/BuildingList.js
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchBuildings } from '../api';
+import { Button, Card, CardContent, Typography, IconButton, Box } from '@mui/material';
+import HomeIcon from '@mui/icons-material/Home';
+import SortIcon from '@mui/icons-material/Sort';
+import AddIcon from '@mui/icons-material/Add'
 
 function BuildingList() {
   const [buildings, setBuildings] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [sortOrder, setSortOrder] = useState('asc'); // 'asc' for ascending, 'desc' for descending
 
   useEffect(() => {
     const getBuildings = async () => {
@@ -15,28 +18,74 @@ function BuildingList() {
         setBuildings(data);
       } catch (err) {
         setError('Failed to fetch buildings');
-      } finally {
-        setLoading(false);
       }
     };
-
     getBuildings();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
+  // Function to toggle sorting order
+  const toggleSortOrder = () => {
+    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+  };
+
+  // Sorting buildings by name 
+  const sortedBuildings = [...buildings].sort((a, b) => {
+    if (sortOrder === 'asc') {
+      return a.name.localeCompare(b.name);
+    } else {
+      return b.name.localeCompare(a.name);
+    }
+  });
+
   if (error) return <p>{error}</p>;
 
   return (
     <div>
-      <h1>Buildings</h1>
-      <ul>
-        {buildings.map((building) => (
-          <li key={building._id}>
-            <Link to={`/buildings/${building._id}`}>{building.name}</Link> - {building.location}
-          </li>
-        ))}
-      </ul>
-      <Link to="/add-building">Add New Building</Link>
+      <Typography variant="h4" gutterBottom>Buildings</Typography>
+
+      <IconButton onClick={toggleSortOrder} aria-label="sort">
+        <SortIcon />
+        <Typography variant="body2" style={{ marginLeft: '5px' }}>
+          Sort by Name ({sortOrder === 'asc' ? 'A-Z' : 'Z-A'})
+        </Typography>
+      </IconButton>
+
+      {sortedBuildings.map((building) => (
+        <Card key={building._id} variant="outlined" style={{ marginBottom: '10px' }}>
+          <CardContent>
+            <Box display="flex" justifyContent="space-between" alignItems="center">
+              <div>
+                <Typography variant="h6">
+                  <HomeIcon style={{ marginRight: '5px' }} />
+                  {building.name}
+                </Typography>
+                <Typography variant="body2">Location: {building.location}</Typography>
+                <Typography variant="body2">Target Temperature: {building.targetTemperature || 'N/A'}°C</Typography>
+              </div>
+              <Button
+                component={Link}
+                to={`/buildings/${building._id}`}
+                variant="contained"
+                color="primary"
+                style={{ marginLeft: 'auto' }}
+              >
+                View Details
+              </Button>
+            </Box>
+          </CardContent>
+        </Card>
+      ))}
+
+      <Button
+        component={Link}
+        to="/add-building"
+        variant="outlined"
+        color="primary"
+        startIcon={<AddIcon />}
+        style={{ marginTop: '15px' }}
+      >
+        Add New Building
+      </Button>
     </div>
   );
 }

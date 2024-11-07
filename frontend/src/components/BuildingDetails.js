@@ -1,7 +1,10 @@
-// src/components/BuildingDetails.js
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { fetchBuildingById, deleteBuilding } from '../api';
+import { Button, Typography } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 function BuildingDetails() {
   const { id } = useParams();
@@ -40,12 +43,41 @@ function BuildingDetails() {
 
   return (
     <div>
-      <h1>{building.name}</h1>
-      <p>Location: {building.location}</p>
-      <p>Current Temperature: {building.currentTemperature}°C</p>
-      <button onClick={handleDelete}>Delete</button>
-      <Link to={`/edit-building/${building._id}`}>Edit</Link>
-      <Link to="/">Back to List</Link>
+      <Typography variant="h4">{building.name}</Typography>
+      <Typography variant="body1">Location: {building.location}</Typography>
+      <Typography variant="body1">Current Temperature: {building.currentTemperature}°C</Typography>
+      
+      <Button
+        variant="contained"
+        color="primary"
+        startIcon={<EditIcon />}
+        component={Link}
+        to={`/edit-building/${building._id}`}
+        style={{ marginTop: '10px', marginRight: '10px' }}
+      >
+        Edit
+      </Button>
+      
+      <Button
+        variant="outlined"
+        color="primary"
+        startIcon={<ArrowBackIcon />}
+        onClick={() => navigate('/')}
+        style={{ marginTop: '10px' }}
+      >
+        Back to List
+      </Button>
+      
+      <Button
+        variant="outlined"
+        color="error"
+        sx={{ minWidth: '250px' }}
+        startIcon={<DeleteIcon />}
+        onClick={handleDelete}
+        style={{ display: 'block', marginTop: '20px' }}
+      >
+        Delete
+      </Button>
     </div>
   );
 }

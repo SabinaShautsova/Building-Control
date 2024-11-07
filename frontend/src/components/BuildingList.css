@@ -21,3 +21,19 @@
     text-decoration: underline;
   }
   
+  .add-building-button {
+    display: inline-block;               /* Makes it behave like a button */
+    padding: 8px 16px;                   /* Adds space inside the button */
+    color: #333;                         /* Text color */
+    background-color: #f8f8f8;           /* Background color */
+    border: 1px solid #333;              /* Border around the button */
+    border-radius: 4px;                  /* Slightly rounded corners */
+    text-decoration: none;               /* Removes underline */
+    font-size: 1em;                      /* Font size */
+    cursor: pointer;                     /* Changes cursor to pointer on hover */
+    transition: background-color 0.3s, color 0.3s; /* Smooth color transition */
+  }
+  
+  .add-building-button:hover {
+    background-color: #e0e0e0;           /* Slightly darker background on hover */
+  }
